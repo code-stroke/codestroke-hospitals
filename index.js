@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!')
 })
 
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 
 app.listen(port, function () {
 	console.log('Hospital location input listening on port ' + port);
