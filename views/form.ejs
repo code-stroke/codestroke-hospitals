@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+	        <meta charset="utf-8">
+	        <link rel="stylesheet" href="style/style.css"> 
+	</head>
+	<body>
+		<section class="form-section details <%= registrationComplete ? 'hidden' : ''%>">
+			<form method="post" action="/" autocomplete="off">
+				<fieldset>
+					<legend>Register a new hospital</legend><br>
+				    <div class="form-row">
+				        <div class="form-label">
+				            Hospital Name
+				        </div>
+				        <input class="form-input text <%= errors.hospital_name ? 'form-field-invalid' : ''%>" name="hospital_name" value="<%=data.hospital_name%>">
+				        </input>
+				    </div>
+				    <% if (errors.hospital_name) { %>
+				    	<div class="error"><%= errors.hospital_name.msg %></div>
+				    <% } %>
+
+				    <div class="form-row">
+				        <div class="form-label">
+				            City
+				        </div>
+				        <input class="form-input text <%= errors.hospital_city ? 'form-field-invalid' : ''%>" name="hospital_city" value="<%=data.hospital_city%>">
+				        </input>
+				    </div>
+				    <% if (errors.hospital_city) { %>
+				    	<div class="error"><%= errors.hospital_city.msg %></div>
+				    <% } %>
+
+				    <div class="form-row">
+				        <div class="form-label">
+				            State
+				        </div>
+				        <input class="form-input text <%= errors.hospital_state ? 'form-field-invalid' : ''%>" name="hospital_state" value="<%=data.hospital_state%>">
+				        </input>
+				    </div>
+				    <% if (errors.hospital_state) { %>
+				    	<div class="error"><%= errors.hospital_state.msg %></div>
+				    <% } %>
+
+				    <div class="form-row">
+				        <div class="form-label">
+				            Coordinates
+				        </div>
+				        <input class="form-input text <%= errors.hospital_coords ? 'form-field-invalid' : ''%>" name="hospital_coords" value="<%=data.hospital_coords%>" placeholder="Latitude,longitude">
+				        </input>
+				    </div>
+				    <% if (errors.hospital_coords) { %>
+				    	<div class="error"><%= errors.hospital_coords.msg %></div>
+				    <% } %>
+
+				    <div class="form-row last">
+				        <div class="form-label">
+				            Server URL
+				        </div>
+				        <input class="form-input text <%= errors.hospital_url ? 'form-field-invalid' : ''%>" name="hospital_url" value="<%=data.hospital_url%>">
+				        </input>
+				    </div>
+				    <% if (errors.hospital_url) { %>
+				    	<div class="error"><%= errors.hospital_url.msg %></div>
+				    <% } %>
+
+				    <div class="form-row submit">
+				        <button class="form-submit" id="submit">Submit</button>
+				    </div>
+
+			    </fieldset>
+			</form>
+		</section>
+		<h1 class="<%= !registrationComplete ? 'hidden' : ''%>" id="successMessage">Registration successful!</h1>
+	</body>
+</body>

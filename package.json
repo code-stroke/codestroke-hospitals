@@ -1,0 +1,18 @@
+{
+  "name": "codestroke-hospitals",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-validator": "^5.2.0"
+  },
+  "devDependencies": {}
+}
