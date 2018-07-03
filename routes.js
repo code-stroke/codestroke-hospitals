@@ -45,6 +45,7 @@ router.post('/', [
 		.trim()
 ], (request, response) => {
 	const errors = validationResult(request);
+	const storage_path = process.env.OPENSHIFT_DATA_DIR ? process.env.OPENSHIFT_DATA_DIR + '/': '';
 
 	if (errors.isEmpty()) {
 		const location_input = matchedData(request);
@@ -52,7 +53,7 @@ router.post('/', [
 		fs.readFile('hospital_list.json', function (err, data) {
 			var hospital_list = isValidJSON(data) ? JSON.parse(data) : [];
 			hospital_list.push(location_input);
-			fs.writeFile('hospital_list.json', JSON.stringify(hospital_list, null, 2), function (err) {
+			fs.writeFile(storage_path  + 'hospital_list.json', JSON.stringify(hospital_list, null, 2), function (err) {
 				if (err) throw err;
 		  		console.log('Updated!');
 			});
