@@ -183,3 +183,15 @@ legend {
     margin-right: auto;
     margin-top: 100px;
 }
+
+#locationField {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+#autocomplete {
+    width: 100%;
+
+}

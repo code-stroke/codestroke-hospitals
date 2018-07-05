@@ -9,7 +9,8 @@ router.get('/', function (req, res) {
 	res.render('form', {
 		data: {},
 		errors: {},
-		registrationComplete: false
+		registrationComplete: false,
+		apiKey: process.env.GOOGLE_API_KEY
 	});
 });
 
@@ -61,13 +62,15 @@ router.post('/', [
 		response.render('form', {
 			data: request.body,
 			errors: errors.mapped(),
-			registrationComplete: true
+			registrationComplete: true,
+			apiKey: process.env.GOOGLE_API_KEY
 		});
 	} else {
 		response.render('form', {
 			data: request.body,
 			errors: errors.mapped(),
-			registrationComplete: false
+			registrationComplete: false,
+			apiKey: process.env.GOOGLE_API_KEY
 		});
 	}
 });

@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head>
-	        <meta charset="utf-8">
-	        <link rel="stylesheet" href="style/style.css"> 
+	    <meta charset="utf-8">
+	    <link rel="stylesheet" href="style/style.css"> 
 	</head>
 	<body>
 		<section class="form-section details <%= registrationComplete ? 'hidden' : ''%>">
 			<form method="post" action="/" autocomplete="off">
 				<fieldset>
 					<legend>Register a new hospital</legend><br>
+					<div id="locationField">
+     					<input id="autocomplete" placeholder="Search for hospital"
+             				onFocus="geolocate()" type="text"></input>
+    				</div>
 				    <div class="form-row">
 				        <div class="form-label">
 				            Hospital Name
 				        </div>
-				        <input class="form-input text <%= errors.hospital_name ? 'form-field-invalid' : ''%>" name="hospital_name" value="<%=data.hospital_name%>">
+				        <input class="form-input text <%= errors.hospital_name ? 'form-field-invalid' : ''%>" name="hospital_name" id="hospital_name" value="<%=data.hospital_name%>">
 				        </input>
 				    </div>
 				    <% if (errors.hospital_name) { %>
@@ -24,7 +28,7 @@
 				        <div class="form-label">
 				            City
 				        </div>
-				        <input class="form-input text <%= errors.hospital_city ? 'form-field-invalid' : ''%>" name="hospital_city" value="<%=data.hospital_city%>">
+				        <input class="form-input text <%= errors.hospital_city ? 'form-field-invalid' : ''%>" name="hospital_city" id="hospital_city" value="<%=data.hospital_city%>">
 				        </input>
 				    </div>
 				    <% if (errors.hospital_city) { %>
@@ -35,7 +39,7 @@
 				        <div class="form-label">
 				            State
 				        </div>
-				        <input class="form-input text <%= errors.hospital_state ? 'form-field-invalid' : ''%>" name="hospital_state" value="<%=data.hospital_state%>">
+				        <input class="form-input text <%= errors.hospital_state ? 'form-field-invalid' : ''%>" name="hospital_state" id="hospital_state" value="<%=data.hospital_state%>">
 				        </input>
 				    </div>
 				    <% if (errors.hospital_state) { %>
@@ -46,7 +50,7 @@
 				        <div class="form-label">
 				            Coordinates
 				        </div>
-				        <input class="form-input text <%= errors.hospital_coords ? 'form-field-invalid' : ''%>" name="hospital_coords" value="<%=data.hospital_coords%>" placeholder="Latitude,longitude">
+				        <input class="form-input text <%= errors.hospital_coords ? 'form-field-invalid' : ''%>" name="hospital_coords" id="hospital_coords" value="<%=data.hospital_coords%>" placeholder="Latitude,longitude">
 				        </input>
 				    </div>
 				    <% if (errors.hospital_coords) { %>
@@ -57,7 +61,7 @@
 				        <div class="form-label">
 				            Server URL
 				        </div>
-				        <input class="form-input text <%= errors.hospital_url ? 'form-field-invalid' : ''%>" name="hospital_url" value="<%=data.hospital_url%>">
+				        <input class="form-input text <%= errors.hospital_url ? 'form-field-invalid' : ''%>" name="hospital_url" id="hospital_url" value="<%=data.hospital_url%>">
 				        </input>
 				    </div>
 				    <% if (errors.hospital_url) { %>
@@ -72,5 +76,8 @@
 			</form>
 		</section>
 		<h1 class="<%= !registrationComplete ? 'hidden' : ''%>" id="successMessage">Registration successful!</h1>
+		<script src="scripts/autocomplete.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<%=apiKey%>&libraries=places&callback=initAutocomplete"
+        async defer></script>
 	</body>
-</body>
+</html>
