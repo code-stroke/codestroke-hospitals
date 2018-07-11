@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+const path = require('path');
 const bodyParser = require('body-parser');
 const { check, validationResult } = require('express-validator/check')
 const { matchedData } = require('express-validator/filter')
+
+const storage_path = process.env.OPENSHIFT_DATA_DIR ? process.env.OPENSHIFT_DATA_DIR + '/': __dirname;
 
 router.get('/', function (req, res) {
 	res.render('form', {
@@ -46,7 +49,6 @@ router.post('/', [
 		.trim()
 ], (request, response) => {
 	const errors = validationResult(request);
-	const storage_path = process.env.OPENSHIFT_DATA_DIR ? process.env.OPENSHIFT_DATA_DIR + '/': '';
 
 	if (errors.isEmpty()) {
 		const location_input = matchedData(request);
@@ -54,7 +56,7 @@ router.post('/', [
 		fs.readFile('hospital_list.json', function (err, data) {
 			var hospital_list = isValidJSON(data) ? JSON.parse(data) : [];
 			hospital_list.push(location_input);
-			fs.writeFile(storage_path  + 'hospital_list.json', JSON.stringify(hospital_list, null, 2), function (err) {
+			fs.writeFile(path.join(storage_path, 'hospital_list.json'), JSON.stringify(hospital_list, null, 2), function (err) {
 				if (err) throw err;
 		  		console.log('Updated!');
 			});
@@ -73,6 +75,10 @@ router.post('/', [
 			apiKey: process.env.GOOGLE_API_KEY
 		});
 	}
+});
+
+router.get('/hospital_list.json', function (req, res) {
+	res.sendFile(path.join(storage_path,  'hospital_list.json'))
 });
 
 module.exports = router;
