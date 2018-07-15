@@ -53,7 +53,7 @@ router.post('/', [
 	if (errors.isEmpty()) {
 		const location_input = matchedData(request);
 
-		fs.readFile('hospital_list.json', function (err, data) {
+		fs.readFile(path.join(storage_path, 'hospital_list.json'), function (err, data) {
 			var hospital_list = isValidJSON(data) ? JSON.parse(data) : [];
 			hospital_list.push(location_input);
 			fs.writeFile(path.join(storage_path, 'hospital_list.json'), JSON.stringify(hospital_list, null, 2), function (err) {
