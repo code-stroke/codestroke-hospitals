@@ -26,6 +26,27 @@ function isValidJSON(text) {
     }
 }
 
+function createHospitalList() {
+	var hospital_list = [{ highest_assigned_id: 0 }];
+
+	fs.writeFile(path.join(storage_path, 'hospital_list.json'), JSON.stringify(hospital_list, null, 2), function (err) {
+		if (err) throw err;
+  		console.log('New hospital list created.');
+	});
+}
+
+function appendHospitalList(data, location_input) {
+	var hospital_list = JSON.parse(data);
+	location_input.hospital_id = hospital_list[0].highest_assigned_id + 1;
+	hospital_list[0].highest_assigned_id++;
+	hospital_list.push(location_input);
+
+	fs.writeFile(path.join(storage_path, 'hospital_list.json'), JSON.stringify(hospital_list, null, 2), function (err) {
+		if (err) throw err;
+  		console.log('Hospital added to list.');
+	});
+}
+
 router.post('/', [
 	check('hospital_name')
 		.isLength({ min: 1})
@@ -54,13 +75,17 @@ router.post('/', [
 		const location_input = matchedData(request);
 
 		fs.readFile(path.join(storage_path, 'hospital_list.json'), function (err, data) {
-			var hospital_list = isValidJSON(data) ? JSON.parse(data) : [];
-			hospital_list.push(location_input);
-			fs.writeFile(path.join(storage_path, 'hospital_list.json'), JSON.stringify(hospital_list, null, 2), function (err) {
-				if (err) throw err;
-		  		console.log('Updated!');
-			});
-		})	
+			if (isValidJSON(data)) {
+				appendHospitalList(data, location_input);
+			} else {
+				createHospitalList();
+
+				fs.readFile(path.join(storage_path, 'hospital_list.json'), function (err, data) {
+					appendHospitalList(data, location_input);
+				});
+			}
+		});
+
 		response.render('form', {
 			data: request.body,
 			errors: errors.mapped(),
